@@ -31,14 +31,32 @@
     }
 
     .heart {
+      position: relative;
       cursor: pointer;
       animation: beat 1s infinite ease-in-out;
+      z-index: 2;
+    }
+
+    .heart-textured {
+      position: relative;
+      display: inline-block;
+    }
+
+    .heart-textured::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url('https://www.transparenttextures.com/patterns/green-dust-and-scratches.png');
+      opacity: 0.3;
+      pointer-events: none;
       z-index: 2;
     }
 
     .heart img {
       width: 80px;
       height: auto;
+      display: block;
     }
 
     @keyframes beat {
@@ -72,46 +90,6 @@
       transform: translateY(0);
     }
 
-    .music-controls {
-      margin-top: 15px;
-      padding: 8px 15px;
-      background-color: #fce7f3;
-      color: #be185d;
-      font-weight: bold;
-      border-radius: 30px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      opacity: 0;
-      transform: scale(0.5);
-      transition: all 2.5s ease;
-    }
-
-    .music-controls.show {
-      opacity: 1;
-      transform: scale(1);
-    }
-
-    .music-controls i {
-      font-style: normal;
-    }
-
-    .music-controls button {
-      background-color: #be185d;
-      color: white;
-      border: none;
-      padding: 5px 12px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background-color 0.3s ease;
-    }
-
-    .music-controls button:hover {
-      background-color: #9d174d;
-    }
-
-    
     .gift.show {
       display: block;
     }
@@ -132,82 +110,56 @@
 
   <div class="container">
     <div class="heart" onclick="toggleLetter()">
-      <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Heart" />
+      <div class="heart-textured">
+        <img src="https://cdn-icons-png.flaticon.com/512/833/833472.png" alt="Heart" />
+      </div>
     </div>
-
-    <div class="music-controls" id="song1-controls">
-      <span>Now Playing: <i>Alexandra</i></span>
-      <button id="playPauseBtn">⏸</button>
-    </div>
-
 
     <div class="letter" id="letter">
-  <p>
-    Dear kate<br><br>
-
-    I just wanna let you know that<br>
-    everything I feel for you is real. My intentions are pure<br>
-    and just want to see you happy, as well as making sure you<br><br>
-    never doubt how deeply loved you're. I know I'm not perfect,<br>
-    and I will never pretend to be, but i promise I will always<br><br>
-    give you the best of me. Even on the roughest days,<br>
-    I won't walk away. I'm always here and<br><br>
-    I'm not giving up on you ever<br>
-  </p>
-  <p style="text-align: center; margin-top: 30px;">
-    Trully yours:<br>
-    Ac<br><br>
-  </p>
-  <div class="gift" id="giftBox">
-    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3MyeGlheTN2a291d3VyeWN5aG9ydzRtdDg1bWRhM3B3bDVsbXpnMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/iVddRfGnwPd4TnZFpo/giphy.gif" alt="Gift">
-  </div>
-</div>
+      <p>
+        Dear kate<br><br>
+        I just wanna let you know that<br>
+        everything I feel for you is real. My intentions are pure<br>
+        and just want to see you happy, as well as making sure you<br><br>
+        never doubt how deeply loved you're. I know I'm not perfect,<br>
+        and I will never pretend to be, but i promise I will always<br><br>
+        give you the best of me. Even on the roughest days,<br>
+        I won't walk away. I'm always here and<br><br>
+        I'm not giving up on you ever<br>
+      </p>
+      <p style="text-align: center; margin-top: 30px;">
+        Truly yours:<br>
+        Ac<br><br>
+      </p>
+      <div class="gift" id="giftBox">
+        <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExd3MyeGlheTN2a291d3VyeWN5aG9ydzRtdDg1bWRhM3B3bDVsbXpnMCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/iVddRfGnwPd4TnZFpo/giphy.gif" alt="Gift">
+      </div>
+    </div>
 
     <audio id="song1" src="alex (1).mp3"></audio>
   </div>
 
 <script>
   let isOpen = false;
-  let isPlaying = true;
-
   const song = document.getElementById('song1');
-  const playPauseBtn = document.getElementById('playPauseBtn');
 
   function toggleLetter() {
     const letter = document.getElementById('letter');
-    const controls = document.getElementById('song1-controls');
     const body = document.body;
 
     letter.classList.toggle('show');
-    controls.classList.toggle('show');
     body.classList.toggle('fade-green');
 
     if (!isOpen) {
       song.play();
-      isPlaying = true;
-      playPauseBtn.innerText = '⏸';
       isOpen = true;
     } else {
       song.pause();
       song.currentTime = 0;
-      playPauseBtn.innerText = '▶️';
-      isPlaying = false;
       isOpen = false;
     }
   }
-
-  playPauseBtn.addEventListener('click', () => {
-    if (isPlaying) {
-      song.pause();
-      playPauseBtn.innerText = '▶️';
-    } else {
-      song.play();
-      playPauseBtn.innerText = '⏸';
-    }
-    isPlaying = !isPlaying;
-  });
 </script>
-
 
 </body>
 </html>
